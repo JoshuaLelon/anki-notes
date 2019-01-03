@@ -1,0 +1,116 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\input ../texpad_macros.tex
+
+\begin{document}
+
+\begin{note}
+\tags{fastai dl}
+  \begin{field}
+  
+  \detail{
+  	Learning Rates: What does Differential Learning Rates mean?
+  }
+  \end{field}
+  \begin{field}
+  \detail{
+    	It means the layers of your DNN each have different learning rates during training (i.e. first layers have smaller learning rate, last layers have larger learning rate).
+    }
+    
+  \end{field}
+\end{note}
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What are cyclical learning rates?}
+\end{field}
+\begin{field}
+\detail{It's essentially doing a logarithmic search for the optimal learning rate.}
+\end{field}
+\end{note}
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What's the first step to finding an optimal learning rate via cyclical learning rates?}
+\end{field}
+\begin{field}
+\detail{Do a training trial run using a low learning rate, but increasing it exponentially with each batch.}
+\end{field}
+\end{note}
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What's the second step to finding an optimal learning rate via cyclical learning rates?
+}
+\end{field}
+\begin{field}
+\detail{
+Plot the loss vs the learning rate, and then pick a learning rate right before the loss stops descending.
+}
+\end{field}
+\end{note}
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What is Cosine Annealing?
+}
+\end{field}
+\begin{field}
+\detail{
+Decreasing the learning rate over iterations as the loss function approaches a minimum in a cosine pattern (slow decrease, fast decrease, slow decrease).
+}
+\end{field}
+\end{note}
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What is Stochastic Gradient Descent with Restarts (SGD-R)?
+}
+\end{field}
+\begin{field}
+\detail{
+During training, every once in a while, increasing the learning rate suddenly so that, in the event that it's in an undesirable local minimum, it will "hop" out.
+}
+\end{field}
+\end{note}
+
+
+\begin{note}
+\tags{fastai dl}
+\
+
+\begin{field}
+\detail{Learning Rates: What is a cycle in SGD-R?
+}
+\end{field}
+\begin{field}
+\detail{
+A cycle is the duration between sudden increases in the learning rate.
+}
+\end{field}
+\end{note}
+
+\end{document}
