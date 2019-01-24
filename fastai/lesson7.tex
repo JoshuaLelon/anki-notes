@@ -1,0 +1,21 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\input ../texpad_macros.tex
+
+\begin{document}
+
+Stride: when sliding the kernel over the image, you skip over some (i.e. a stride of n means start at the corner, move n pixels, convolve, move n pixels, etc). It has the same effect as max pooling.
+
+AdaptiveMaxPool just means instead of stating the pooling dimensions (i.e. taking the max out of an n by n square for each n by n square), state how big you want the resulting image to be. Thus, doing a adaptive max pool on a 10 x 10 image with the parameter 2 will result in a 2 x 2 image).
+
+A fully convolutional network is a network where all layers are convolutional layers except the last one.
+
+\end{document}
