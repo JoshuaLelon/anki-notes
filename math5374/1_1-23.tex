@@ -1,0 +1,560 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\newcommand{\detail}[1]{{\LARGE#1\par}~}
+\newcommand{\refs}[1]{{\LARGE\textit{References: }#1\par}\hfill.}
+\newcommand*{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\lgmth}[1]{\begingroup\LARGE\[#1\]\endgroup}
+
+%%% commands that do not need to imported into Anki:
+\usepackage{mdframed}
+\newcommand*{\tags}[1]{\paragraph{tags: }#1\bigskip}
+\newcommand*{\xfield}[1]{\begin{mdframed}[font=\sffamily\LARGE]\centering #1\end{mdframed}\bigskip}
+\newenvironment{field}{}{}
+\newcommand*{\xplain}[1]{\begin{mdframed}\texttt{#1}\end{mdframed}\bigskip}
+\newenvironment{plain}{\ttfamily}{\par}
+\newenvironment{note}{}{}
+% END OF THE PREAMBLE
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}} % |Irrationals 
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+\newcommand{\lba}{ \mt{\longmapsto} }     % element maps to |--->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+\newcommand{\abk}[1]{\mt{\langle}#1\mt{\rangle}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rln}{ \mt{\sim} }
+\newcommand{\dvd}{ \mt{\vert} }
+\newcommand{\ndvd}{ \mt{\not\vert} }
+\newcommand{\eqw}{ \mt{ \equiv } }
+\newcommand{\lcg}{ \mt{\gamma} }
+
+\newcommand{\edp}{\mt{\bigoplus} }
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\mxc}[5]{ % Matrix Column: entry entry entry entry DIMENSION
+\underset{#5 \times 1}{
+  \begin{bmatrix}
+     #1 \\
+     #2 \\
+     #3 \\
+     #4
+  \end{bmatrix}
+  }
+}
+
+\newcommand{\mxr}[5]{ % Matrix Row:    entry entry entry entry DIMENSION
+\underset{1 \times #5}{
+  \begin{bmatrix}
+     #1 & #2 & #3 & #4
+  \end{bmatrix}
+  }
+}
+
+\begin{document}
+
+\bsc{Matrix-vector multiplication} {
+
+\eqn{\textbf{b} = A\textbf{x}}
+
+One may see this as showing \textbf{b} represented by a linear combination of the columns of A.
+
+\
+
+Let \textbf{x} \mem \uf{\bc}{n}, A \mem \uf{\bc}{m\times n}
+
+Then \textbf{b} \mem \uf{\bc}{m} (recalling that \textbf{b} \eql A\textbf{x}), i.e.
+
+\begin{displaymath}
+  \textbf{b} = \mxc{b_1}{b_2}{...}{b_m}{m}
+  \tab{}
+  A\textbf{x} = \underset{m \times n}{
+\begin{bmatrix}
+    a_{11} & a_{12} & ... & a_{1n} \\
+    a_{21} & a_{22} & ... & a_{2n} \\
+    ... & ... & ... & ... \\
+    a_{m1} & a_{m2} & ... & a_{mn} 
+  \end{bmatrix}
+}
+\mxc{x_1}{x_2}{...}{x_n}{n}
+\end{displaymath}
+
+Specifically,
+
+\begin{displaymath}
+  \underset{m\times 1}{\textbf{b}} = \underset{m \times n}{A} \cdot \underset{n\times 1}{\textbf{x}}
+\end{displaymath}
+
+where
+
+\eqn{\textbf{b} = x_1 \textbf{a}_1 + x_2 \textbf{a}_2 + ... + x_n \textbf{a}_n}
+
+where each \uw{\textbf{a}}{i} has length m (the number of rows in A).
+
+\
+
+Also: the map \textbf{x} \lba A\textbf{x} is linear.
+
+\
+
+So \textbf{b} \mem \uf{\bc}{m} and 
+
+\eqn{\textbf{b}_i = \sum_{j=1}^n a_{ij} x_{j} \tab{} i = 1, 2, ..., m}
+
+Notice:
+
+For any x, y \mem \uf{\bc}{n} and \afa \mem \bc,
+
+\begin{displaymath}
+  A(\textbf{x} + \textbf{y}) = A\textbf{x} + A\textbf{y}
+\end{displaymath}
+
+and
+
+\begin{displaymath}
+  A(\alpha \textbf{x}) = \alpha A\textbf{x}
+\end{displaymath}
+
+
+Conversely, any linear map \uf{\bc}{n} \lra \uf{\bc}{m} can be expressed as multiplication by some m x n matrix.
+
+\ssc{Example: Vandermonde Matrix}{
+
+Fix numbers \uw{x}{1}, \uw{x}{2}, ..., \uw{x}{m}.
+
+If p and q are polynomials of degree \ls n and \afa is a scalar, 
+
+then p \ps q and p\afa are polynomials of degree \ls n.
+
+\
+
+Note: 
+
+\begin{displaymath}
+  (p + q)x_i = p(x_i) + q(x_i)
+\end{displaymath}
+and
+\begin{displaymath}
+  (\alpha p)(x_i) = \alpha(p(x_i))
+\end{displaymath}
+
+which implies that it is a linear transformation.
+
+\
+
+Let
+
+\begin{displaymath}
+A = \underset{m \times n}{
+\begin{bmatrix}
+    1 & x_1 & x_1^2 ... & x_1^{n-1} \\
+    1 & x_2 & x_1^2 ... & x_1^{n-1} \\
+    1 & x_3 & x_1^2 ... & x_1^{n-1} \\
+    ... & ... & ... & ... & ... \\
+    1 & x_m & x_m^2 ... & x_m^{n-1} 
+  \end{bmatrix}
+}
+\end{displaymath}
+  
+If c is the column vector of coefficients of p, i.e.
+
+\begin{displaymath}
+  c = \mxc{c_0}{c_1}{...}{c_{n - 1}}{n}
+\end{displaymath}
+
+and,
+
+\begin{displaymath}
+  p(x) = c_0 + c_1x + c_2x^2 + ... + c_{n - 1}x^{n-1}
+\end{displaymath}
+
+then Ac gives the sampled polynomial values. \textbf{(what's the goal here?)}
+
+}
+
+\ssc{Aside: vector spaces}{
+
+A basis of \uf{\br}{n} is composed of n vectors \uw{\textbf{v}}{i} \mem \uf{\br}{n} such that:
+
+\eqn{\{\textbf{v}_1, \textbf{v}_2, ... \textbf{v}_n\}}
+
+is a linearly independent set.
+
+\
+
+In practice, though, just because it's linearly independent, doesn't mean it's good to work with. If all the vectors are barely linearly independent, then it makes calculations hard.
+
+\
+
+Note: Chebychev and Lagandra polynomials are orthogonal polynomials (as opposed to the polynomials from the Vandermonde Matrix.)
+}
+
+
+\
+
+\ssc{Matrix Multiplication}{
+
+Let
+
+\eqn{\underset{l \times n}{B} = \underset{l \times m}{A} \cdot \underset{m \times n}{C}}
+
+where each column of B is a linear combination of the columns of A.
+
+\textbf{(Is it also accurate to say each column of B is a linear combination of the rows of A?)} Specifically:
+
+\eqn{b_{ij} = \sum_{k=1}^{m} a_{ik} c_{kj} }
+
+Illustrated another way:
+
+\
+
+\begin{displaymath}
+\underset{l \times n}{
+\begin{bmatrix}
+    \vert & \vert & \vert & \vert \\
+    b_1 & b_2 & ... & b_n \\
+    \vert & \vert & \vert & \vert
+\end{bmatrix}
+}
+=
+\underset{l \times m}{
+\begin{bmatrix}
+    \vert & \vert & \vert & \vert \\
+    a_1 & a_2 & ... & a_m \\
+    \vert & \vert & \vert & \vert
+\end{bmatrix}
+}
+\underset{m \times n}{
+\begin{bmatrix}
+    \text{---} & c_1 & \text{---} \\
+    \text{---} & c_2 & \text{---} \\
+    \text{---} & ... & \text{---} \\
+    \text{---} & c_n & \text{---}
+\end{bmatrix}
+}
+\end{displaymath}
+
+For example,
+\eqn{\textbf{b}_j = A\textbf{c}_j = \sum_{k=1}^m c_{kj}a_k}
+
+}
+
+\ssc{Inner and Outer Products}{
+
+Inner products (in the case of vectors \textbf{(is this true?)}) are dot products and they create scalars.
+
+Outer products create matrices:
+
+\begin{displaymath}
+  \mxc{u_1}{u_2}{...}{u_m}{m} \times \mxr{v_1}{v_2}{...}{n_n}{n} = 
+\underset{m \times n}{
+\begin{bmatrix}
+    u_1 v_1 & u_1 v_2 & ... & u_n v_1 \\
+    u_2 v_1 & u_2 v_2 & ... & u_n v_2 \\
+    ... & ... & ... & ... \\
+    u_m v_1 & u_m v_2 & ... & u_n v_m 
+  \end{bmatrix}
+}
+\end{displaymath}
+
+}
+
+\ssc{Range}{
+
+The range of a matrix A, or range(A), is the set of all vectors that can be expressed as A\textbf{x} for some \textbf{x}.
+
+You can think of this as a function that maps \uf{\bc}{n} to \uf{\bc}{m}
+
+\
+
+Theorem:
+
+\
+
+range(A) is the space spanned by the columns of A.
+
+\bgpf
+
+Recall:
+
+\begin{displaymath}
+  Ax = b = \sum_{j=1}^n x_j a_j
+\end{displaymath}
+
+and any Ax is a linear combination of columns of A.
+
+This is saying that if something is in the range of A, then it is something spanned by the columns.
+
+Conversely, any vector x in the space spanned by the columns of A can be written as a linear combination of the columns,
+
+\begin{displaymath}
+  y = \sum_{j=1}^n x_j a_j
+\end{displaymath}
+
+Forming a vector x with the coefficients \uw{x}{j}, we have 
+
+\begin{displaymath}
+  y = Ax
+\end{displaymath}
+
+
+Thus, y \mem range(A).
+
+\epf
+
+}
+
+\ssc{Null Space}{
+
+The null space of A \mem \uf{\bc}{m \times n}, denoted null(A), is the set of vectors \textbf{x} such that
+
+\eqn{A\textbf{x} = \textbf{0} \mem \bc^m}
+
+We then write
+
+\eqn{}
+
+\begin{displaymath}
+  \textbf{0} = x_1 a_1 + x_2 a_2 + ... + x_n a_n
+\end{displaymath}
+
+
+and \textbf{0} \mem null(A)
+
+}
+
+\ssc{Rank}{
+
+The column rank of a matrix is the dimension of the space spanned by its columns.
+
+The row rank of a matrix is the dimension of the space spanned by its rows.
+
+In fact, the row rank of a matrix is always equal to its column rank (see: SVD).
+
+Since these two values are equal, we just refer to the "rank" of the matrix.
+
+A matrix is full rank if the rank is equal to min(m, n).
+
+\
+
+Theorem:
+
+\
+
+A matrix A \mem \uf{\bc}{m \times n} with m \gre n has full rank if and only if it maps no two distinct vectors to the same vector.
+
+\
+
+\bgpf
+
+\rar
+
+If A has full rank (i.e. its rank is n), then its columns are linearly independent. Thus, its columns form a basis for range(A).
+
+Thus, if \textbf{b} \mem range(A), then \textbf{b} has a unique linear expansion in terms of the columns of A, and by 
+
+\eqn{\textbf{b} = A\textbf{x} = \sum_{j=1}^n x_j a_j}
+
+every \textbf{b} \mem range(A) has a unique \textbf{x} such that \textbf{b} \eql A\textbf{x}.
+
+\lar 
+
+Conversely, if A is not full rank, its columns \uw{a}{j} are dependent, and there is a nontrivial (not \textbf{0}) combination such that
+
+\eqn{\sum_{j=1}^n c_j a_j = 0}
+
+Thus, A\textbf{c} \eql \textbf{0} and then, for any \textbf{x}, 
+
+\eqn{A\textbf{x} = A(\textbf{x} + \textbf{c})}
+
+\epf
+
+}
+
+\ssc{Inverse}{
+
+A non-singular (or invertible) matrix is a square matrix with full rank.
+
+\
+
+The identity matrix I \mem \uf{\bc}{n \times n}:
+
+\eqn{I = \underset{n \times n}{
+\begin{bmatrix}
+    \vert & \vert & \vert & \vert \\
+    e_1 & e_2 & ... & e_n \\
+    \vert & \vert & \vert & \vert
+\end{bmatrix}
+}}
+
+If AZ \eql I and ZA \eql I then Z \eql \uf{A}{-1}
+
+\
+
+Theorem:
+
+\
+
+For A \mem \uf{\bc}{m \times m}, the following are equivalent:
+
+\begin{enumerate}
+  \item A has an inverse \uf{A}{-1}
+  \item rank(A) \eql m
+  \item rank(A) \eql \uf{\bc}{m}
+  \item null(A) \eql \bk{0}
+  \item 0 is not an eigenvalue of a.
+  \item 0 is not a singular value of a.
+  \item det A is not equal to 0
+\end{enumerate}
+
+Warning: don't take the inverse and then find stuff. That's computationally expensive. 
+
+e.g. if \textbf{x} \eql \uf{A}{-1}\textbf{b} is the solution to A\textbf{x} \eql \textbf{b}.
+
+}
+
+\
+
+HW: problems 1.1 and 1.3
+
+
+\end{document}

@@ -1,0 +1,479 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\newcommand{\detail}[1]{{\LARGE#1\par}~}
+\newcommand{\refs}[1]{{\LARGE\textit{References: }#1\par}\hfill.}
+\newcommand*{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\lgmth}[1]{\begingroup\LARGE\[#1\]\endgroup}
+
+%%% commands that do not need to imported into Anki:
+\usepackage{mdframed}
+\newcommand*{\tags}[1]{\paragraph{tags: }#1\bigskip}
+\newcommand*{\xfield}[1]{\begin{mdframed}[font=\sffamily\LARGE]\centering #1\end{mdframed}\bigskip}
+\newenvironment{field}{}{}
+\newcommand*{\xplain}[1]{\begin{mdframed}\texttt{#1}\end{mdframed}\bigskip}
+\newenvironment{plain}{\ttfamily}{\par}
+\newenvironment{note}{}{}
+% END OF THE PREAMBLE
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}} % |Irrationals 
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+\newcommand{\lba}{ \mt{\longmapsto} }     % element maps to |--->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+\newcommand{\abk}[1]{\mt{\langle}#1\mt{\rangle}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rln}{ \mt{\sim} }
+\newcommand{\dvd}{ \mt{\vert} }
+\newcommand{\ndvd}{ \mt{\not\vert} }
+\newcommand{\eqw}{ \mt{ \equiv } }
+\newcommand{\lcg}{ \mt{\gamma} }
+
+\newcommand{\edp}{\mt{\bigoplus} }
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\mxc}[5]{ % Matrix Column: entry entry entry entry DIMENSION
+\underset{#5 \times 1}{
+  \begin{bmatrix}
+     #1 \\
+     #2 \\
+     #3 \\
+     #4
+  \end{bmatrix}
+  }
+}
+
+\newcommand{\mxr}[5]{ % Matrix Row:    entry entry entry entry DIMENSION
+\underset{1 \times #5}{
+  \begin{bmatrix}
+     #1 & #2 & #3 & #4
+  \end{bmatrix}
+  }
+}
+
+\begin{document}
+
+\bsc{Orthogonal Vectors and Matrices} {
+
+Adjoint: 
+
+The complex conjugate of a scalar, z, is denoted by either \uf{z}{*}, and is obtained by negating the imaginary part.
+
+The hermitian conjugate, or adjoint, of A \mem \uf{\bc}{m \times n} is denoted by \uf{A}{*}.
+
+We mean to say that \uf{A}{*} \mem \uf{\bc}{n \times m}, with entries \uw{\uf{a}{*}}{i, j} equal to the complex conjugate of \uw{a}{i, j}.
+
+If A \mem \uf{\br}{m \times n}, then this is denoted by \uf{A}{T}.
+
+If A \eql \uf{A}{T}, then A is symmetric.
+
+\ssc{Inner Product}{
+
+Let \textbf{x}, \textbf{y} \mem \uf{\bc}{m}.
+
+Take the convention that every vector is a column vector, and only deviate that if you specifically say it's a row vector.
+
+The inner product is given by:
+\begin{displaymath}
+  \textbf{x}^*\textbf{y} = \sum_{i = 1}^m x_i y_i
+\end{displaymath}
+
+The Euclidean length of x may be written norm(x), defined by
+\begin{displaymath}
+	\splt{
+		norm(x) & = \sqrt{x^* x} \\
+  		& = ( \sum_{i = 1}^m |x_i|^2)^\frac{1}{2} \\
+  		& hi
+		}
+\end{displaymath}
+
+Recall: 
+
+\begin{displaymath}
+  x_i = a + b_i
+\end{displaymath}
+
+\begin{displaymath}
+  |x_i| = \sqrt{a^2 + b^2}
+\end{displaymath}
+
+We can also define an angle between two vectors as:
+
+\begin{displaymath}
+  \cos \alpha = \frac{x^* y}{||x||\times ||y||}
+\end{displaymath}
+
+}
+
+Inner products are bilinear, or linear in each vector.
+
+\begin{displaymath}
+  \splt{ (x_1 + x_2)^* y & = x_1^* y + x_2^* y \\
+  	x^*(y_1 + y_2) & = x^*y_1 + x^* y_2 \\
+  	& = (\alpha x)^* (\beta y) = \alpha \beta x^*y
+  }
+\end{displaymath}
+
+Note:
+
+\begin{displaymath}
+  (AB)^* = B^* A^*
+\end{displaymath}
+
+and
+
+\begin{displaymath}
+  (AB)^{-1} = B^{-1} A^{-1}
+\end{displaymath}
+
+}
+
+\ssc{Orthogonal Vectors}{
+
+\textbf{x} and \textbf{y} are orthogonal if
+
+\begin{displaymath}
+  \textbf{x}^*\textbf{y} = 0
+\end{displaymath}
+
+Two sets of vectors X and Y are orthogonal if every \textbf{x} \mem X is orthogonal to every \textbf{y} \mem Y.
+
+A set of nonzero vectors S is orthogonal if its elements are pairwise orthogonal.
+
+If x, y \mem S, then \uf{x}{*}y \eql  or x \eql y.
+
+A set S of vectors is orthonormal if S is orthogonal and all \textbf{x} \mem S have the property:
+
+\begin{displaymath}
+  ||x|| = 1
+\end{displaymath}
+
+Theorem:
+
+\
+
+The vectors in an orthogonal set S are linearly independent.
+
+\bgpf
+
+If the vectors in S are not linearly independent, then some vector \uw{\textbf{v}}{k} \mem S can be written as:
+
+\begin{displaymath}
+  v_k = \sum_{i = 1, i \neq k}^n c_i v_i
+\end{displaymath}
+
+Since \uw{\textbf{v}}{k} $\neq$ 0,
+
+\begin{displaymath}
+  \textbf{v}_k^* \textbf{v}_k = ||\textbf{v}_k||^2 > 0
+\end{displaymath}
+
+However,
+
+\begin{displaymath}
+  \textbf{v}_k^* \textbf{v}_k = \sum_{i = 1, i \neq k}^n c_i \textbf{v}_k^* \textbf{v}_i = 0
+\end{displaymath}
+
+However, we said that this would be positive, which is a contradiction.
+
+Hence, they're linearly independent.
+
+\epf 
+
+
+}
+
+We may easily expand a vector into its orthogonal components.
+
+Suppose
+
+\begin{displaymath}
+  \bk{\textbf{q}_1, \textbf{q}_2, ..., \textbf{q}_n, }
+\end{displaymath}
+
+is an orthogonal set, and let v be an arbitrary vector.
+
+\begin{displaymath}
+  r = v - (q_1^* v)q_1 - (q_2^* v)q_2 - ... - (q_n^* v)q_n
+\end{displaymath}
+
+So r, what's left of v, is orthogonal to all the q's.
+
+To prove that r is orthogonal to all the q's, look at:
+
+\begin{displaymath}
+  q_i^* r = q_i^* v - (q^*_1 v) q^*_i q_1 - ... - (q^*_i v) q^*_i q_i - ... - (q^*_n v) q^*_i q_n = 0
+\end{displaymath}
+
+
+\ssc{Unitary Matrices}{
+
+Q \mem \uf{\bc}{m \times m} is unitary (or orthogonal if real) if \uf{Q}{*} \eql \uf{Q}{-1}, or \uf{Q}{*}Q \eql I
+
+}
+
+\
+
+Note, bad terminology:
+
+A matrix is orthogonal mean it forms an orthonormal.
+
+If a matrix is orthogonal but not unit length vectors, then we say the matrix has an orthogonal set.
+
+\
+
+\begin{displaymath}
+  \underset{m \times m}{
+\begin{bmatrix}
+    \text{---} & q_1^* & \text{---} \\
+    \text{---} & q_2^* & \text{---}\\
+    \text{---} & ... & \text{---}\\
+    \text{---} & q_m^* & \text{---}
+\end{bmatrix}
+} \underset{m \times m}{
+\begin{bmatrix}
+    \vert & \vert & \vert & \vert \\
+    q_1 & q_2 & ... & q_m \\
+    \vert & \vert & \vert & \vert
+\end{bmatrix}
+} = \underset{m \times m}{
+\begin{bmatrix}
+    1 & 0 & ... & 0 \\
+    0 & 1 & ... & 0  \\
+    ... & ... & ... & ... \\
+    0 & 0 & ... &  1
+  \end{bmatrix}
+}
+\end{displaymath}
+
+i.e.
+
+\begin{displaymath}
+  q_i^* q_j = \delta_{i, j} =  
+\end{displaymath}
+
+1 if i \eql j, 0 if i $\neq$ j.
+
+kronecker delta
+
+So \uf{Q}{*}b is the vector of coefficients of the expansion of b in the basis of the columns of Q.
+
+So if you're trying to solve Ax \eql b, and A is unitary, then you could write Qx \eql b, and you could multiply by \uf{Q}{*} on both sides, so x \eql \uf{Q}{*}b.
+
+\
+
+If Q is unitary, then
+
+\begin{displaymath}
+  (Qx)^* (Qy) = x^* y
+\end{displaymath}
+
+and 
+
+\begin{displaymath}
+	\splt{
+  		||x||^2 & = x \times x \\
+  		& = (Qx)^* (Qx) \\
+  		& = ||Qx||^2
+	}
+\end{displaymath}
+
+Hence, the length of Qx is the same as x.
+
+NORMS NORMS
+
+A norm is a function: 
+\begin{displaymath}
+	ll . ll : \bc^m \lra \br
+\end{displaymath}
+
+that assigns a real-valued length to each vector that has three properties:
+
+\begin{enumerate}
+  \item norm(x) \gre 0 and norm(x) \eql 0 \lar \rar x \eql \textbf{0}
+  \item norm(x \ps y) \lse norm(x) \ps norm(y)
+  \item norm(\afa x) \eql norm(\afa) * norm(x)
+\end{enumerate}
+
+Other norms:
+
+\begin{displaymath}
+  norm(x)_1 = \sum_{i = 1}^m |x_i|
+\end{displaymath}
+
+A diamond
+
+\begin{displaymath}
+  norm(x)_2 = (\sum_{i = 1}^m |x_i|^2)^{1/2}
+\end{displaymath}
+
+A circle
+
+\begin{displaymath}
+  norm(x)_p = (\sum_{i = 1}^m |x_i|^p)^{1/p}
+\end{displaymath}
+
+A squared off circle
+
+\begin{displaymath}
+  norm(x)_\infty = max_{1 \lse i \lse m} |x_i|
+\end{displaymath}
+
+A square
+
+\begin{displaymath}
+  norm(x)_w = norm(Wx)
+\end{displaymath}
+
+with some kind of diagonal matrix W, where \uw{w}{i} $\neq$ 0. This will give you something like an ellipse.
+
+You can build a matrix norm as induced by vector norms.
+
+Given some norms n and m on the domain and range of some matrix A \mem \uf{\bc}{m \times n}, then the induced matrix norm, ll A ll sub (m, n) is the smallest number C such that ll Ax ll sub m \lse C ll x ll sub n
+
+or
+
+ll A ll sub m, n \eql sup x \mem \uf{\bc}{n} \frc{ll Ax ll_m}{ll x ll_(n)}
+
+Problems 2.1 and 2.3 are due Monday 2/4 or something, Problem 1.3 is due Wednesday 1/30.
+
+\end{document}

@@ -1,0 +1,404 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\newcommand{\detail}[1]{{\LARGE#1\par}~}
+\newcommand{\refs}[1]{{\LARGE\textit{References: }#1\par}\hfill.}
+\newcommand*{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\lgmth}[1]{\begingroup\LARGE\[#1\]\endgroup}
+
+%%% commands that do not need to imported into Anki:
+\usepackage{mdframed}
+\newcommand*{\tags}[1]{\paragraph{tags: }#1\bigskip}
+\newcommand*{\xfield}[1]{\begin{mdframed}[font=\sffamily\LARGE]\centering #1\end{mdframed}\bigskip}
+\newenvironment{field}{}{}
+\newcommand*{\xplain}[1]{\begin{mdframed}\texttt{#1}\end{mdframed}\bigskip}
+\newenvironment{plain}{\ttfamily}{\par}
+\newenvironment{note}{}{}
+% END OF THE PREAMBLE
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}} % |Irrationals 
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+\newcommand{\lba}{ \mt{\longmapsto} }     % element maps to |--->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+\newcommand{\abk}[1]{\mt{\langle}#1\mt{\rangle}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rln}{ \mt{\sim} }
+\newcommand{\dvd}{ \mt{\vert} }
+\newcommand{\ndvd}{ \mt{\not\vert} }
+\newcommand{\eqw}{ \mt{ \equiv } }
+\newcommand{\lcg}{ \mt{\gamma} }
+
+\newcommand{\edp}{\mt{\bigoplus} }
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\mxc}[5]{ % Matrix Column: entry entry entry entry DIMENSION
+\underset{#5 \times 1}{
+  \begin{bmatrix}
+     #1 \\
+     #2 \\
+     #3 \\
+     #4
+  \end{bmatrix}
+  }
+}
+
+\newcommand{\mxr}[5]{ % Matrix Row:    entry entry entry entry DIMENSION
+\underset{1 \times #5}{
+  \begin{bmatrix}
+     #1 & #2 & #3 & #4
+  \end{bmatrix}
+  }
+}
+
+\begin{document}
+
+01/23's HW:
+
+\
+
+\textbf{Exercise 1.3}: Generalizing Example 1.3, we say that a square or rectangular matrix R with entries \uw{r}{ij} is upper-triangular if \uw{r}{ij} \eql 0 for i \gr j. By considering what space is spanned by the first n columns of R and using (1.8), show that if R is a nonsingular m $\times$ m upper-triangular matrix, then \uf{R}{-1} is also upper-triangular. (The analogous result also holds for lower-triangular matrices.)
+
+\bgpf
+
+Let A be a nonsingular m $\times$ m upper-triangular matrix:
+
+\begin{displaymath}
+  A = \underset{m \times m}{
+\begin{bmatrix}
+     a_{11} & ... & ... & a_{1m} \\
+     0 & ... & ... & ... \\
+     ... & 0 & ... & ... \\
+     0 & ... & 0 &  a_{mm}
+  \end{bmatrix}
+}
+\end{displaymath}
+
+Let \uw{\textbf{e}}{j} be the jth unit vector in the vector space \uf{\bc}{m}, i.e.
+
+\begin{displaymath}
+  I = \underset{m \times m}{
+\begin{bmatrix}
+    \vert & \vert & \vert & \vert \\
+    e_1 & e_2 & ... & e_m \\
+    \vert & \vert & \vert & \vert
+\end{bmatrix}
+}
+\end{displaymath}
+
+
+
+
+We want to show that Z \eql \uf{A}{-1} is also upper-triangular. Let's look at \uw{\textbf{a}}{1}, the first column of A.
+
+\begin{displaymath}
+  \textbf{e}_1 = Z\textbf{r}_1
+\end{displaymath}
+
+\begin{displaymath}
+  \underset{m \times 1}{
+\begin{bmatrix}
+     1  \\
+     0 \\
+     0 \\
+     0
+  \end{bmatrix}
+} 
+= \underset{m \times m}{
+\begin{bmatrix}
+     z_{1,1} & ... & ... & z_{1,m} \\
+     z_{2,1} & ... & ... & z_{2,m} \\
+     ... & ... & ... & z_{1,m} \\
+     z_{m,1} & ... & z_{m,m-1} & z_{m,m} 
+  \end{bmatrix}
+}
+\underset{m \times 1}{
+\begin{bmatrix}
+     a_{1} \\
+     0 \\
+     ... \\
+     0 
+  \end{bmatrix} 
+} 
+\end{displaymath}
+
+Notice:
+
+If we look at entries 2 through m of \uw{\textbf{e}}{1}, they're all zero.
+
+This means that \uw{\textbf{r}}{1} $\cdot$ \uw{\textbf{z}}{i} $=$ 0 for Z rows i \eql 2 through m.
+
+Since entries 2 through m of \uw{\textbf{r}}{1} are 0,
+
+\begin{displaymath}
+  0 = z_{i,1} \times r_{11}
+\end{displaymath}
+
+for i \eql 2 through m.
+
+\
+
+Since \uw{r}{11} $\neq$ 0, 
+
+\begin{displaymath}
+  z_{i,1} = 0
+\end{displaymath}
+
+for i \eql 2 through m. Thus, we have:
+
+\begin{displaymath}
+  \underset{m \times 1}{
+\begin{bmatrix}
+     1  \\
+     0 \\
+     0 \\
+     0
+  \end{bmatrix}
+} 
+= \underset{m \times m}{
+\begin{bmatrix}
+     z_{1,1} & z_{1,2}  & ... & z_{1,m} \\
+     0 & z_{2,2}  & ... & z_{2,m} \\
+     ... & ...  & ... & z_{1,m} \\
+     0 & z_{m,2} . & z_{m,m-1} & z_{m,m} 
+  \end{bmatrix}
+}
+\underset{m \times 1}{
+\begin{bmatrix}
+     a_{1} \\
+     0 \\
+     ... \\
+     0 
+  \end{bmatrix} 
+} 
+\end{displaymath}
+
+\
+
+In the above case, Z is upper-triangular in at least the first column. We establish this as the base case, and desire to show that Z is upper triangular in general.
+
+Inductive step:
+
+\
+
+Assume every entry in \uw{\textbf{z}}{j} past entry j is 0 for j \eql 1, 2, ..., i \ms 1. We want to show that it is also true for j \eql i.
+
+Let j \eql i where i \ls m. Notice:
+
+\begin{displaymath}
+  \underset{m \times 1}{
+\begin{bmatrix}
+     0  \\
+     ... \\
+     0 \\
+     1 \\
+     0 \\
+     ... \\
+     0
+  \end{bmatrix}
+} 
+= A\textbf{z}_j = \underset{m \times m}{
+\begin{bmatrix}
+     z_{1,1} & ... & ... & z_{1, j} & ... & z_{1,m} \\
+     ... & ... & ... & ... & ... & ... \\
+     0 & ...  & z_{j - 1, j - 1} & z_{j - 1, j} & ... & z_{j - 1, m} \\
+     0 & ...  & 0 & z_{j, j} & ... & z_{j, m} \\
+     0 & ...  & 0 & ... & ... & ... \\
+     ... & ...  & ... & ... & ... & ... \\
+     0 & ... & 0 & z_{m, j} & ... & z_{m,m} 
+  \end{bmatrix}
+}
+\underset{m \times 1}{
+\begin{bmatrix}
+     a_1  \\
+     ... \\
+     a_{j - 1} \\
+     a_j \\
+     0 \\
+     ... \\
+     0
+  \end{bmatrix} \\
+}
+\end{displaymath}
+
+So,
+
+\begin{displaymath}
+A\textbf{z}_j = \underset{m \times m}{
+\begin{bmatrix}
+     ... & ... & ... & ... & ... & ... \\
+     ... & ... & ... & ... & ... & ... \\
+     ... & ...  & ... & ... & ... & ...\\
+     0 & ...  & 0 & z_{j, j} & ... & z_{j, m} \\
+     0 & ...  & 0 & z_{j + 1, j} & ... & z_{j + 1, m} \\
+     ... & ...  & ... & ... & ... & ... \\
+     0 & ... & 0 & z_{m, j} & ... & z_{m,m} 
+  \end{bmatrix}
+}
+\underset{m \times 1}{
+\begin{bmatrix}
+     a_1  \\
+     ... \\
+     a_{j - 1} \\
+     a_j \\
+     0 \\
+     ... \\
+     0
+  \end{bmatrix} \\
+} 
+\end{displaymath}
+
+Notice:
+
+To the left of the jth column of Z is all zeros, and the bottom of the a column (below \uw{a}{j}) is also all zeros. Thus, the dot product of Z's row with \uw{\textbf{a}}{j} is determined solely by the \uw{z}{k, j} entry times the \uw{a}{j} entry (for k \eql j \ps 1 to m).
+
+\
+
+Since 0 \eql \uw{z}{k, j} $\times$ \uw{a}{j} for k \eql j \ps 1 to m and \uw{a}{j} is non-zero by definition, \uw{z}{k, j} must be zero for k \eql j \ps 1 to m.
+
+Hence, there is all zeros below \uw{z}{j, j} for all j.
+
+Hence, Z \eql \uf{A}{-1} is upper-triangular.
+
+\epf
+
+\end{document}
