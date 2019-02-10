@@ -202,6 +202,12 @@ Show that if a matrix A is both triangular and unitary, then it is diagonal.
 
 Let A \mem \uf{\bc}{m \times n} be triangular and unitary. We wish to show that A is, therefore, diagonal.
 
+\
+
+** ATTEMPT 1 (This didn't work, but I'd like to know if it could) **
+
+\
+
 However, suppose A is also not diagonal.
 
 Then, \exs \uw{a}{j} \mem A and some \uw{a}{i, j} \mem \uw{a}{j} such that \uw{a}{i, j} $\neq$ 0 and i $\neq$ j.
@@ -223,6 +229,33 @@ Notice: \uw{a}{i, i} $\cdot$ \uw{a}{i, j} $\neq$ 0 and \uw{a}{k, i} $\cdot$ \uw{
 \begin{displaymath}
   a_{i, i}* \cdot a_{i, j} + ... + a_{j, i}* \cdot a_{j, j} +  ... a_{m, i}* \cdot a_{m, j} \eql 0
 \end{displaymath}
+
+Now, if I could just show that 
+
+\begin{displaymath}
+  a_{i + 1, i}* \cdot a_{i + 1, j} +  ... a_{m, i}* \cdot a_{m, j} \eql 0
+\end{displaymath}
+
+That would complete the proof by contradiction. Not sure how to do that, though.
+
+\
+
+** ATTEMPT 2 **
+
+\
+
+Proof sketch (by induction), since I'm running out of time:
+
+Base case: up to \uw{a}{1}, A is diagonal since there's only one non-zero entry and it's at the top.
+
+Inductive step: A is diagonal up to \uw{a}{k \ms 1}.
+
+Prove: A is diagonal up to k \ms 1 \rar A is diagonal up to k.
+
+Idea: since \uw{a}{k - 1} is diagonal, if \uw{a}{k} were to have any non-zero entries above \uw{a}{k, k}, then the vector \uw{a}{k} would lean into the space occupied by one of the vectors before it (i.e. if \uw{a}{k} had a non zero entry at i \ls k, then it'd be leaning into the space occupied by \uw{a}{i}.
+
+\
+
 
 2.3
 
