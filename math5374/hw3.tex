@@ -286,70 +286,44 @@ An eigenvalue decomposition of B will be of the form:
   B = XVX^{-1}
 \end{displaymath}
 
-Notice:
+Recall: Theorems 6.4.3 and 6.4.4 of Linear Algebra with Applications, edition 4:
+
+\
+
+Theorem 6.4.3 (Schur's Theorem):
+
+\
+
+For each n $\times$ n matrix A, there exists a unitary matrix U such that \uf{U}{*}AU is upper triangular.
+
+\
+
+and
+
+\
+
+Theorem 6.4.4 (Spectral Theorem):
+
+\
+
+If A is Hermitian, then there exists a unitary matrix U that diagonalizes A (i.e. that \uf{U}{*}AU \eql D, a diagonal matrix).
+
+\
+
+Since B is hermitian,
 
 \begin{displaymath}
-\splt{
-  B & = \underset{2m \times 2m}{
-\begin{bmatrix}
-   0 & A^* \\
-   A & 0 
-  \end{bmatrix}
-} \\
-& = \underset{2m \times 2m}{
-\begin{bmatrix}
-   0 & (U\Sigma V^*)^* \\
-   U\Sigma V^* & 0 
-  \end{bmatrix}
-} \\ 
-& = \underset{2m \times 2m}{
-\begin{bmatrix}
-   0 & V \Sigma U^* \\
-   U\Sigma V^* & 0 
-  \end{bmatrix}
-} \\
-& = \underset{2m \times 2m}{
-\begin{bmatrix}
-   V & 0 \\
-   0 & U
-  \end{bmatrix}
-}
-\underset{2m \times 2m}{
-\begin{bmatrix}
-   0 & \Sigma \\
-   \Sigma & 0 
-  \end{bmatrix}
-}
-\underset{2m \times 2m}{
-\begin{bmatrix}
-   V^* & 0\\
-   0 & U^* 
-  \end{bmatrix}
-} \\ 
-& = \underset{2m \times 2m}{
-\begin{bmatrix}
-   0 & V \\
-   U & 0
-  \end{bmatrix}
-}
-\underset{2m \times 2m}{
-\begin{bmatrix}
-   \Sigma & 0 \\
-   0 & \Sigma  
-  \end{bmatrix}
-}
-\underset{2m \times 2m}{
-\begin{bmatrix}
-   V^* & 0\\
-   0 & U^* 
-  \end{bmatrix}
-} \\ 
-}
+  U^* B U \eql D
 \end{displaymath}
 
-The last decomposition has the singular values in the right place, but the before and after aren't inverses. The 2nd to last has them as inverses, but no decomposition in the right place.
+where U is a unitary matrix and D is a diagonal matrix. With some algebra,
 
-If you have two matrices on each side of a diagonal matrix that are inverses, does this mean that the left matrix is a matrix of the eigenvectors of the  resulting matrix?
+\begin{displaymath}
+  B \eql U D U^*
+\end{displaymath}
+
+Since U diagonalizes B, it follows that the diagonal elements of D are the eigenvalues of A and the column vectors of U are eigenvectors of A.
+
 
 
 \end{document}

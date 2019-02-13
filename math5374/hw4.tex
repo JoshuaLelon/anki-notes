@@ -250,7 +250,7 @@ Give A \mem \uf{\bc}{m \times n} with m \gre n, show that \uf{A}{*}A is nonsingu
   \sigma_n \gre \sigma_{n - 1} \gre ... \gre \sigma_1 \gr 0
 \end{displaymath}
 
-By Theorem 5.4, $\sigma$'s of A are the square roots of \uf{A}{*}A.
+By Theorem 5.4, $\sigma$'s of A are the square roots of \uf{A}{*}A's eigenvalues.
 
 Thus, 
 
@@ -280,14 +280,20 @@ A has full rank implies that
   \lambda_n \gre \lambda_{n - 1} \gre ... \gre \lambda_1 \gr 0
 \end{displaymath}
 
+\
+
 Notice:
 
 \begin{displaymath}
-\splt{
-  A^* A & = (XVX^{-1})^* XVX^{-1} \\
-  & (X^{-1})^* V X^* X V X^{-1}
-}
+  A^*A = A^2 = (XVX^{-1})^2 = X V^2 X^{-1}
 \end{displaymath}
+
+Since all eigenvalues of A are nonzero, that means all entries of \uf{V}{2} are nonzero.
+
+Since all entries of \uf{V}{2} are non-zero, that means that \uf{A}{2} is full rank.
+
+Since \uf{A}{2} is full rank, that implies \uf{A}{2} and \uf{A}{*}A are non-singular.
+
 
 
 \end{document}
