@@ -1,0 +1,275 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\newcommand{\detail}[1]{{\LARGE#1\par}~}
+\newcommand{\refs}[1]{{\LARGE\textit{References: }#1\par}\hfill.}
+\newcommand*{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\lgmth}[1]{\begingroup\LARGE\[#1\]\endgroup}
+
+%%% commands that do not need to imported into Anki:
+\usepackage{mdframed}
+\newcommand*{\tags}[1]{\paragraph{tags: }#1\bigskip}
+\newcommand*{\xfield}[1]{\begin{mdframed}[font=\sffamily\LARGE]\centering #1\end{mdframed}\bigskip}
+\newenvironment{field}{}{}
+\newcommand*{\xplain}[1]{\begin{mdframed}\texttt{#1}\end{mdframed}\bigskip}
+\newenvironment{plain}{\ttfamily}{\par}
+\newenvironment{note}{}{}
+% END OF THE PREAMBLE
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}} % |Irrationals 
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+\newcommand{\lba}{ \mt{\longmapsto} }     % element maps to |--->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+\newcommand{\abk}[1]{\mt{\langle}#1\mt{\rangle}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rln}{ \mt{\sim} }
+\newcommand{\dvd}{ \mt{\vert} }
+\newcommand{\ndvd}{ \mt{\not\vert} }
+\newcommand{\eqw}{ \mt{ \equiv } }
+\newcommand{\lcg}{ \mt{\gamma} }
+
+\newcommand{\edp}{\mt{\bigoplus} }
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\mxc}[5]{ % Matrix Column: entry entry entry entry DIMENSION
+\underset{#5 \times 1}{
+  \begin{bmatrix}
+     #1 \\
+     #2 \\
+     #3 \\
+     #4
+  \end{bmatrix}
+  }
+}
+
+\newcommand{\mxr}[5]{ % Matrix Row:    entry entry entry entry DIMENSION
+\underset{1 \times #5}{
+  \begin{bmatrix}
+     #1 & #2 & #3 & #4
+  \end{bmatrix}
+  }
+}
+
+\begin{document}
+
+Joshua Mitchell; MATH 5374; HW 5; 7.5 
+
+\
+
+7.5
+
+\
+
+Let A be an m $\times$ n matrix (m \gre n), and let A \eql $\hat Q \hat R$ be a reduced QR factorization.
+
+\begin{enumerate}
+  \item Show that A has rank n if and only if all the diagonal entries of $\hat R$ are non-zero.
+  
+ \rar
+ 
+ Suppose that A has rank n.
+ 
+ Want to show: A has rank equal to the number of non-zero diagonal entries in $\hat R$ by induction.
+ 
+ Base case: Column 1 of A spans 1 dimension. Since \uw{q}{1} is non-zero and \uw{a}{1} is non-zero, that implies that \uw{r}{1, 1} is non-zero.
+ 
+ Inductive step: Assume that A has non-zero diagonal entries up to column k \ms 1, k \ls n.
+ 
+ Now, we want to show that if A has non-zero diagonal entries up to column k \ms 1, the kth diagonal entry of $\hat R$ must also be non-zero.
+ 
+ However, suppose that the kth diagonal is 0. 
+ 
+ Since A is full rank up to column k \ms 1, that implies that its $\hat Q \hat R$ decomposition up to k \ms 1 is also full rank.
+ 
+ This also means that any vector in \uf{\bc}{k \ms 1} can be written as a linear combination of the first k \ms 1 columns of A and of $\hat Q \hat R$.
+ 
+ Since $\hat R_{i, k}$ for i:= k ... n is 0 and $\hat Q$ is orthonormal, $A_k$ \eql $\hat Q \hat R_k$ is a vector that lies in the span of the first k \ms 1 columns of A.
+ 
+ This is a contradiction, since A is full rank. Hence, $\hat R_{k, k}$ must be non-zero.
+ 
+ Thus, by induction, all diagonal entries of $\hat R$ must be non-zero.
+ 
+ \newpage
+ 
+ \lar
+ 
+ Assume that all diagonal entries of $\hat R$ are non-zero.
+ 
+ Then
+ \begin{displaymath}
+  \splt{a_1 & = r_{11}q_1 \\
+  a_2 & = r_{12}q_1 + r_{22}q_2 \\
+  & ... \\
+  a_n & = r_{1n}q_1 + r_{2n}q_2 + ... + r_{nn}q_n
+  }
+\end{displaymath}
+
+where \uw{r}{i, i} $\neq$ 0, for i:= 1 to n.
+
+Notice: A up to \uw{a}{1} is rank 1 as a base case.
+
+Assume A up to \uw{A}{k - 1} is rank k \ms 1.
+
+Then
+
+\begin{displaymath}
+  a_k = r_{1k}q_1 + r_{2k}q_2 + ... + r_{kk}q_k
+\end{displaymath}
+
+Since A up to k \ms 1 is full rank, \uw{r}{k, k} is nonzero, and $\hat Q$ is orthonormal, the $r_{k, k}q_k$ vector is not a linear combination of $\hat Q \hat R_i$ for i:= 1 ... k \ms 1. Therefore, \uw{a}{k} is not a linear combination of the first k \ms 1 columns of A, and A up to column k has rank k.
+
+Hence, by induction, A has rank n.
+
+  
+  \item Suppose that $\hat R$ has k nonzero diagonal entries for some k with 0 \lse k \ls n. What does this imply about the rank of A? Exactly k? At least k? At most k? Give a precise answer, and prove it.
+ 
+ Well, if $\hat R$ has 0 non-zero diagonal entries (i.e. all zeros down the diagonal) but has non-zero entries everywhere else in the upper part, then it still has rank n \ms 1. So it can't be exactly k nor at most k. So if the only other option is at least k, then that has to be it.
+ 
+ Proof:
+ 
+ Suppose $\hat R$ has k non-zero diagonal entries. Then each corresponding column of A is a linear combination of orthonormal vectors from $\hat Q$. Since each successive linear combination adds a new dimension to the rank of A due to the non-zero entry on the diagonal, that means A has at least rank k. 
+ 
+\end{enumerate}
+
+
+\end{document}
