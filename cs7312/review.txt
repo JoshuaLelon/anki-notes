@@ -1,0 +1,30 @@
+Joshua Mitchell: Anonymous review of KDD example paper.
+
+- Specify the three most positive points of the paper.
+
+1) The tables were well formatted and easy to understand.
+2) The results, from a statistical perspective, seem pretty solid (given that 6 standardized data sets were used).
+3) The test result accuracy on source datasets was pretty high: 85.1%
+
+- Specify the three most negative points of the paper.
+
+1) There were a multitude of grammatical and spelling errors.
+2) Claims weren't backed up very well - what is the metric for heterogenous, and what's the metric for meaningful features?
+3) Model doesn't appear novel: Their text classification model is just a "slight variant of CNN architecture of Kim, Yoon (2014)"
+
+- Please specify if this paper is relevant to the Research Track of KDD
+    
+== 1 Somehow relevant: the paper is interesting to some researchers in the area
+
+- Please provide a detailed review, including a justification for your scores.
+
+Overall, the paper seemed pretty weak. The CNN architecture with the w and w' word embedding didn't seem that novel (these are all very standard ideas, as are the mixing and matching of them). The test result accuracy was pretty high, but nothing mind blowing (only 85.1%) - it's hard to tell how much of this was from luck and engineering. Some of the results also weren't that well explained. For example, "It supposed to be lower in P7 than P9 since the target dataset and source dataset of P9 both has 2 labels while source dataset in P7 has 5 labels. However, the result of P7 is higher than the result of P9." - why would this be? What is the explanation?
+
+- Your overall score for the paper.
+
+    == -2 Reject
+
+- Your level of expertise in the area of this paper
+
+    == 2 I have passing familiarity with this area
+
