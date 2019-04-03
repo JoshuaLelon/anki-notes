@@ -1,0 +1,424 @@
+% -*- coding:utf-8 -*-
+% LATEX PREAMBLE --- needs to be imported manually
+\documentclass[12pt]{article}
+% \special{papersize=3in,5in}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsthm}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+
+\newcommand{\detail}[1]{{\LARGE#1\par}~}
+\newcommand{\refs}[1]{{\LARGE\textit{References: }#1\par}\hfill.}
+\newcommand*{\abs}[1]{\left\vert#1\right\vert}
+\newcommand{\lgmth}[1]{\begingroup\LARGE\[#1\]\endgroup}
+
+%%% commands that do not need to imported into Anki:
+\usepackage{mdframed}
+\newcommand*{\tags}[1]{\paragraph{tags: }#1\bigskip}
+\newcommand*{\xfield}[1]{\begin{mdframed}[font=\sffamily\LARGE]\centering #1\end{mdframed}\bigskip}
+\newenvironment{field}{}{}
+\newcommand*{\xplain}[1]{\begin{mdframed}\texttt{#1}\end{mdframed}\bigskip}
+\newenvironment{plain}{\ttfamily}{\par}
+\newenvironment{note}{}{}
+% END OF THE PREAMBLE
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}} % |Irrationals 
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+\newcommand{\lba}{ \mt{\longmapsto} }     % element maps to |--->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+\newcommand{\abk}[1]{\mt{\langle}#1\mt{\rangle}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\rln}{ \mt{\sim} }
+\newcommand{\dvd}{ \mt{\vert} }
+\newcommand{\ndvd}{ \mt{\not\vert} }
+\newcommand{\eqw}{ \mt{ \equiv } }
+\newcommand{\lcg}{ \mt{\gamma} }
+
+\newcommand{\edp}{\mt{\bigoplus} }
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\mxc}[5]{ % Matrix Column: entry entry entry entry DIMENSION
+\underset{#5 \times 1}{
+  \begin{bmatrix}
+     #1 \\
+     #2 \\
+     #3 \\
+     #4
+  \end{bmatrix}
+  }
+}
+
+\newcommand{\mxr}[5]{ % Matrix Row:    entry entry entry entry DIMENSION
+\underset{1 \times #5}{
+  \begin{bmatrix}
+     #1 & #2 & #3 & #4
+  \end{bmatrix}
+  }
+}
+
+\begin{document}
+
+Joshua Mitchell
+
+CS 7312 Assignment 4
+
+\
+
+\begin{verbatim}
+  1.1 (5 points) Draw the inverted index that would be built for the following
+  document collection. (See Figure 1.3, Page 6 of the textbook, for an example.)
+
+Doc 1 	new home sales top forecasts
+
+Doc 2 	home sales rise in july
+
+Doc 3 	increase in home sales in july
+
+Doc 4 	july new home sales rise
+\end{verbatim}
+
+
+\
+
+\begin{tabular}{l|cc}
+  Value & Key& \\
+  \hline
+  new & 1, 4& \\
+  home & 1, 2, 3, 4 & \\
+  sales & 1, 2, 3, 4 & \\
+  top & 1 & \\
+  forecasts & 1 & \\
+  rise & 2, 4 & \\
+  in & 2, 3 & \\
+  july & 2, 3, 4 & \\
+  increase & 1 &
+\end{tabular}
+
+\begin{verbatim}
+  1.2 (5 points) Consider the following fragment of a positional index
+  with the format: 
+
+word: document: <position, position, . . .>; document: < position, . . .> 
+. . .
+Gates: 1: <3>; 2: <6>; 3: <2,17>; 4: <1>;
+IBM: 4: <3>; 7: <14>;
+Microsoft: 1: <1>; 2: <1,21>; 3: <3>; 5: <16,22,51>;
+
+The /k operator, word1 /k word2 finds occurrences of word1 within k words of word2 (on either side), where k is a positive integer argument. Thus k = 1 demands that word1 be adjacent to word2.
+
+Describe the set of documents that satisfy the query Gates /2 Microsoft.
+\end{verbatim}
+
+\
+
+Documents 1 and 3 satisfy this query.
+
+Gates is within 2 words of Microsoft in document 1, and Gates is within 1 word of Microsoft in document 3.
+
+\
+
+\begin{verbatim}
+  (20 points) Computing ranking scores in a search engine with the lnc.ltc 
+  weighting scheme. Let the query be "good student” and the document be
+  "good bad student good bad instructor”. Fill out the empty columns in the
+  following table and then compute the cosine similarity between the query 
+  vector and the document vector. In the table, df denotes document frequency,
+  idf denotes inverse document frequency (i.e., idft = log10N/dft),
+  tf denotes term frequency, log tf denotes the tf weight based on log-frequency 
+  weighting as shown in slides (i.e., 1+log10tft,d for tft,d> 0 and 0 otherwise), 
+  q is the query vector, q’ is the length-normalized q, d is the document vector, 
+  and d’ is the length-normalized d.  Assume N = 10,000,000.
+  
+  The cosine similarity between q and d is the dot product of q’ and d’, which is:                             
+\end{verbatim}
+
+\begin{tabular}{lcc|cccc|cccc}
+  & & & query & & & & document & & & \\
+  \hline
+  terms & df & idf & tf & log tf & q & q' & tf & log tf & d & d' \\
+  \hline
+  bad & 1000 & 4 & 0 & 0 & 0 & 0 & 2 & 1.3 & 1.3 & 0.561 \\
+  good & 10000 & 3 & 1 & 1 & 3 & 0.794 & 2 & 1.3 & 1.3 & 0.561 \\
+  instructor & 10 & 6 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 0.431 \\
+  student & 50000 & 2.3 & 1 & 1 & 2.3 & 0.608 & 1 & 1 & 1 & 0.431 \\
+   
+\end{tabular}
+
+\
+
+Dot product of q' and d': 0.707
+
+\
+
+\begin{verbatim}
+  3.1 (10 points) An IR system returns 8 relevant documents, and 10 nonrelevant
+  documents. There are a total of 20 relevant documents in the collection.
+  What is the precision of the system for this search, what is its recall?
+  what is the balanced F measure?
+\end{verbatim}
+
+\
+
+The precision is 0.44, the recall is 0.4, and the balanced F measure is 0.421.
+
+\
+
+\begin{verbatim}
+  3.2 (10 points) Consider an information need for which there are 4 relevant
+  documents in the collection. Compare two systems that run on this collection. 
+  Their top 10 results are judged for relevance as follows (the leftmost item 
+  is the top ranked search result):
+
+System 1: R N R N N N N N R R
+
+System 2: N R N N R R R N N N
+
+a. What is the MAP of each system? Which has a higher MAP?
+b. What is the R-precision of each system? Does it rank the systems the 
+same as MAP?
+\end{verbatim}
+
+\
+
+a.
+
+System 1 MAP: (1 + 0 + 2/3 + 0 + 0 + 0 + 0 + 0 + 3/9 + 4/10) / 4 = 0.6
+
+System 2 MAP: (0 + 1/2 + 0 + 0 + 2/5 + 3/6 + 4/7 + 0 + 0 + 0) / 4 = 0.493
+
+System 1 has the higher MAP.
+
+\
+
+b.
+
+The R precision of System 1 is 0.5, and the R precision of System 2 is 0.25.
+
+The ranking order of each system is the same (System 1 comes first).
+
+\
+
+
+\begin{verbatim}
+  3.3 (20 points) The following list of R’s and N’s represents relevant (R)
+   and nonrelevant (N) documents in a ranked list of 20 documents in
+   response to a query from a collection of 10,000 documents. The 
+   leftmost item is the top ranked search result. This list shows 6
+   relevant documents. Assume that there are 8 relevant documents in
+   total in the collection.
+
+R R N N N N N N R N R N N N R N N N N R
+
+a. What is the precision of the system on the top 20?
+b. What is the F1 (balanced F measure) on the top 20?
+c. What is the uninterpolated precision of the system at 25% recall?
+d. What is the interpolated precision at 33% recall?
+e. Assume that these 20 documents are the complete result set of the system.
+What is the MAP for the query?
+
+Assume, now, instead, that the system returned the entire 10,000 documents
+in a ranked list, and these are the first 20 results returned.
+
+f. What is the largest possible MAP that this system could have?
+g. What is the smallest possible MAP that this system could have?
+\end{verbatim}
+
+a. Precision: 6/20 = 0.3
+
+b. F1: (2 * 0.3 * 0.75) / (0.3 + 0.75) = 0.429
+
+c. (2 * P * 0.25) / (P + 0.25)
+
+d.
+
+e. System MAP: (1 + 1 + 0 + 0 + 0 + 0 + 0 + 0 + 3/9 + 0 + 4/11 + 0 + 0 + 0 + 5/15 + 0 + 0 + 0 + 0 + 6/20) / 6 = 0.555
+
+\
+
+f. Largest MAP: (1 + 1 + 0 + 0 + 0 + 0 + 0 + 0 + 3/9 + 0 + 4/11 + 0 + 0 + 0 + 5/15 + 0 + 0 + 0 + 0 + 6/20 + 7/21 + 8/22) / 8 = 0.503
+
+g. Smallest MAP: (1 + 1 + 0 + 0 + 0 + 0 + 0 + 0 + 3/9 + 0 + 4/11 + 0 + 0 + 0 + 5/15 + 0 + 0 + 0 + 0 + 6/20 + 0 + ... + 0 + 7/9999 + 8/10000) / 8 = 0.416
+
+\
+
+\begin{verbatim}
+  4.1 (15 points) Consider a web graph with three nodes 1, 2 and 3. The links
+  are as follows: 1 -> 2, 3 -> 2, 2 -> 1, 2 -> 3. Write down the transition
+  probability matrices for the random surfer’s walk with teleporting, for
+  the following three values of the teleport probability:
+  (a) a = 0; (b) a = 0.5 and (c) a = 1.
+  
+\end{verbatim}
+
+\begin{displaymath} a:
+  \begin{bmatrix}
+     0 & 1 & 0\\
+     1/2 & 0 & 1/2 \\
+     0 & 1 & 0  
+  \end{bmatrix} b:
+  \begin{bmatrix}
+     1/6 & 2/3 & 1/6 \\
+     5/12 & 1/6 & 5/12 \\
+     1/6 & 2/3 & 1/6 
+  \end{bmatrix} c:
+  \begin{bmatrix}
+     1/3 & 1/3 & 1/3 \\
+     1/3 & 1/3 & 1/3 \\
+     1/3 & 1/3 & 1/3  
+  \end{bmatrix}
+\end{displaymath}
+
+\
+
+\
+
+\
+
+\begin{verbatim}
+  4.2 (15 points) For the web graph shown below,
+  compute PageRank, hub and authority scores for each of the three pages.
+  
+  PageRank: Assume that at each step of the PageRank random walk, 
+  we teleport to a random page with probability 0.1, with a uniform 
+  distribution over which particular page we teleport to.
+
+  Hubs/Authorities: Normalize the hub (authority) scores so that the
+  maximum hub (authority) score is 1.
+\end{verbatim}
+
+
+\end{document}

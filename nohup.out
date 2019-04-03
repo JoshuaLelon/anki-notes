@@ -1,0 +1,36 @@
+Texas State University
+
+Use of Computer and network facilities requires prior
+authorization. Unauthorized  access is  prohibited.
+Usage may be subject to security testing and monitoring.
+Abuse is subject to criminal prosecution. Use of these
+facilities implies agreement to comply with the policies
+of Texas State University.
+
+Last login: Wed Mar 27 14:40:09 2019 from 10.216.61.237
+Rocks 6.2 (SideWinder)
+Profile built 13:25 03-Jul-2017
+
+Kickstarted 13:34 03-Jul-2017
+]0;jlm346@login1:~[?1034h(base) [jlm346@login1 ~]$ sdf^C
+]0;jlm346@login1:~(base) [jlm346@login1 ~]$ ^C
+]0;jlm346@login1:~(base) [jlm346@login1 ~]$ ^C
+]0;jlm346@login1:~(base) [jlm346@login1 ~]$ ^C
+]0;jlm346@login1:~(base) [jlm346@login1 ~]$ sfdafdTexas State University
+
+Use of Computer and network facilities requires prior
+authorization. Unauthorized  access is  prohibited.
+Usage may be subject to security testing and monitoring.
+Abuse is subject to criminal prosecution. Use of these
+facilities implies agreement to comply with the policies
+of Texas State University.
+
+Last login: Wed Mar 27 14:40:29 2019 from 10.216.61.237
+Rocks 6.2 (SideWinder)
+Profile built 13:25 03-Jul-2017
+
+Kickstarted 13:34 03-Jul-2017
+]0;jlm346@login1:~[?1034h(base) [jlm346@login1 ~]$ [K(base) [jlm346@login1 ~]$ sfdafd^C
+]0;jlm346@login1:~(base) [jlm346@login1 ~]$ packet_write_wait: Connection to 147.26.36.118 port 22: Broken pipe
+tcsetattr: Bad file descriptor
+packet_write_wait: Connection to 147.26.36.118 port 22: Broken pipe
