@@ -1,2 +1,4 @@
 https://github.com/kabirahuja2431/FineTuneBERT
-
+https://www.kaggle.com/oumaimahourrane/imdb-reviews/download
+https://www.kaggle.com/crowdflower/twitter-airline-sentiment/download
+https://www.kaggle.com/yelp-dataset/yelp-dataset#yelp_academic_dataset_review.json
