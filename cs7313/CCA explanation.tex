@@ -1,0 +1,288 @@
+% Thank you Josh Davis for this template!
+% https://github.com/jdavis/latex-homework-template/blob/master/homework.tex
+
+\documentclass{article}
+
+\newcommand{\hmwkTitle}{HW\ \#1}
+
+% \input{ShortcutsAnalysis}
+
+% ----------
+
+% Packages
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{chngcntr}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+% Libraries
+
+\graphicspath{ {./img/} }
+
+\usetikzlibrary{automata, positioning, arrows}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName}
+\chead{}
+\rhead{\hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\setcounter{secnumdepth}{0}
+
+\newcommand{\hmwkClass}{CS 5329}        % Class
+\newcommand{\hmwkClassInstructor}{Dr. Metsis}           % Instructor
+\newcommand{\hmwkAuthorName}{\textbf{Joshua Mitchell}} % Author
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    \normalsize\vspace{0.1in}\small\vspace{0.1in}\large{\textit{\hmwkClassInstructor}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+%
+% Various Helper Commands
+%
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+% Formatting commands:
+
+\newcommand{\mt}[1]{\ensuremath{#1}}
+\newcommand{\nm}[1]{\textrm{#1}}
+
+\newcommand\bsc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \section[#1]{#2}%
+}
+\newcommand\ssc[2][\DefaultOpt]{%
+  \def\DefaultOpt{#2}%
+  \subsection[#1]{#2}%
+}
+\newcommand{\bgpf}{\begin{proof} $ $\newline}
+
+\newcommand{\bgeq}{\begin{equation*}}
+\newcommand{\eeq}{\end{equation*}}	
+
+\newcommand{\balist}{\begin{enumerate}[label=\alph*.]}
+\newcommand{\elist}{\end{enumerate}}
+
+\newcommand{\bilist}{\begin{enumerate}[label=\roman*)]}	
+
+\newcommand{\bgsp}{\begin{split}}
+% \newcommand{\esp}{\end{split}} % doesn't work for some reason.
+
+\newcommand\prs[1]{~~~\textbf{(#1)}}
+
+\newcommand{\lt}[1]{\textbf{Let: } #1}
+     							   %  if you're setting it to be true
+\newcommand{\supp}[1]{\textbf{Suppose: } #1}
+     							   %  Suppose (if it'll end up false)
+\newcommand{\wts}[1]{\textbf{Want to show: } #1}
+     							   %  Want to show
+\newcommand{\as}[1]{\textbf{Assume: } #1}
+     							   %  if you think it follows from truth
+\newcommand{\bpth}[1]{\textbf{(#1)}}
+
+\newcommand{\step}[2]{\begin{equation}\tag{#2}#1\end{equation}}
+\newcommand{\epf}{\end{proof}}
+
+\newcommand{\dbs}[3]{\mt{#1_{#2_#3}}}
+
+\newcommand{\sidenote}[1]{-----------------------------------------------------------------Side Note----------------------------------------------------------------
+#1 \
+
+---------------------------------------------------------------------------------------------------------------------------------------------}
+
+% Analysis / Logical commands:
+
+\newcommand{\br}{\mt{\mathbb{R}} }       % |R
+\newcommand{\bq}{\mt{\mathbb{Q}} }       % |Q
+\newcommand{\bn}{\mt{\mathbb{N}} }       % |N
+\newcommand{\bc}{\mt{\mathbb{C}} }       % |C
+\newcommand{\bz}{\mt{\mathbb{Z}} }       % |Z
+
+\newcommand{\ep}{\mt{\epsilon} }         % epsilon
+\newcommand{\fa}{\mt{\forall} }          % for all
+\newcommand{\afa}{\mt{\alpha} }
+\newcommand{\bta}{\mt{\beta} }
+\newcommand{\dta}{\mt{\delta} }
+\newcommand{\mem}{\mt{\in} }
+\newcommand{\exs}{\mt{\exists} }
+
+\newcommand{\es}{\mt{\emptyset} }        % empty set
+\newcommand{\sbs}{\mt{\subset} }         % subset of
+\newcommand{\fs}[2]{\{\uw{#1}{1}, \uw{#1}{2}, ... \uw{#1}{#2}\}}
+
+\newcommand{\lra}{ \mt{\longrightarrow} } % implies ----->
+\newcommand{\rar}{ \mt{\Rightarrow} }     % implies -->
+
+\newcommand{\lla}{ \mt{\longleftarrow} }  % implies <-----
+\newcommand{\lar}{ \mt{\Leftarrow} }      % implies <--
+
+\newcommand{\av}[1]{\mt{|}#1\mt{|}}  % absolute value
+
+\newcommand{\prn}[1]{(#1)}
+\newcommand{\bk}[1]{\{#1\}}
+
+\newcommand{\ps}{\mt{+} }
+\newcommand{\ms}{\mt{-} }
+
+\newcommand{\ls}{\mt{<} }
+\newcommand{\gr}{\mt{>} }
+
+\newcommand{\lse}{\mt{\leq} }
+\newcommand{\gre}{\mt{\geq} }
+
+\newcommand{\eql}{\mt{=} }
+
+\newcommand{\pr}{\mt{^\prime} } 		   % prime (i.e. R')
+\newcommand{\uw}[2]{#1\mt{_{#2}}}
+\newcommand{\uf}[2]{#1\mt{^{#2}}}
+\newcommand{\frc}[2]{\mt{\frac{#1}{#2}}}
+\newcommand{\lmti}[1]{\mt{\displaystyle{\lim_{#1 \to \infty}}}}
+\newcommand{\limt}[2]{\mt{\displaystyle{\lim_{#1 \to #2}}}}
+
+\newcommand{\bnm}[2]{\mt{#1\setminus{#2}}}
+\newcommand{\bnt}[2]{\mt{\textrm{#1}\setminus{\textrm{#2}}}}
+\newcommand{\bi}{\bnm{\mathbb{R}}{\mathbb{Q}}}
+
+\newcommand{\urng}[2]{\mt{\bigcup_{#1}^{#2}}}
+\newcommand{\nrng}[2]{\mt{\bigcap_{#1}^{#2}}}
+\newcommand{\nck}[2]{\mt{{#1 \choose #2}}}
+
+\newcommand{\nbho}[3]{\textrm{N(}#1, #2\textrm{) }\cap \textrm{ #3} \neq \emptyset}
+     							   %  N(x, eps) intersect S \= emptyset
+\newcommand{\nbhe}[3]{\textrm{N(}#1, #2\textrm{) }\cap \textrm{ #3} = \emptyset}
+     							   %  N(x, eps) intersect S  = emptyset
+\newcommand{\dnbho}[3]{\textrm{N*(}#1, #2\textrm{) }\cap \textrm{ #3} \neq \emptyset}
+     							   %  N*(x, eps) intersect S \= emptyset
+\newcommand{\dnbhe}[3]{\textrm{N*(}#1, #2\textrm{) }\cap \textrm{ #3} = \emptyset}
+     							   %  N*(x, eps) intersect S = emptyset
+     							   
+\newcommand{\eqn}[1]{\[#1\]}
+\newcommand{\splt}[1]{\begin{split}#1\end{split}}
+
+\newcommand{\infy}{\mt{\infty} }
+\newcommand{\unn}{\mt{\cup} }
+\newcommand{\inn}{\mt{\cap} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\newcommand{\wit}[1]{\mt{\widetilde{#1}}}
+
+\newcommand{\bgo}[1]{\mt{\mathcal{O}(\mathrm{#1})}}
+\newcommand{\bgt}[1]{\mt{\Theta(\mathrm{#1})}}
+\newcommand{\bgm}[1]{\mt{\Omega(\mathrm{#1})}}
+     							 
+% ----------
+
+\begin{document}
+
+Let $W_{DS} \mem \br^{|V_{DS}| \times d_1}$ and $W_G \mem \br^{|V_G| \times d_2}$ be the domain specific and generic word embedding matrices.
+
+Let $w_{i, DS}$ and $w_{i, G}$ be the embedding of the word i \mem V$_\inn$ \eql V$_{DS}$ \inn V$_G$
+
+Let $\phi_{DS}$ and $\phi_G$ be the projection directions of $w_{i, DS}$ and $w_{i, G}$, respectively.
+
+\
+
+For each embedding of each word, we will project it like so (the $\phi$'s are like the a and b in the CCA tutorial):
+
+\begin{equation*}
+	\overline w_{i, DS} = w_{i, DS} \; \phi_{DS} \; \mathrm{ and } \; \overline w_{i, G} = w_{i, G} \; \phi_{G}
+\end{equation*}
+and we'll maximize the correlation of this projection like so:
+\begin{equation*}
+	\rho(\phi_{DS}, \phi_G) \eql \max \frac{\mathbb{E}[<\overline w_{i, DS}, \overline w_{i, G}>]}{\sqrt{\mathbb{E}[\overline w^2_{i, DS}]\;\mathbb{E}[\overline w^2_{i, G}]}}
+\end{equation*}
+
+We can repeat this process up to d \eql min(d$_1$, d$_2$) times, such that each canonical variable is uncorrelated with the previous ones.
+
+\
+
+Once we do that, we have two matrices of projection vectors: $\boldsymbol\phi_{DS}$ \mem $\br^{d_1 \times d}$ and $\boldsymbol\phi_{G}$ \mem $\br^{d_2 \times d}$
+
+\
+
+Finally, for a particular word i, we achieve its domain-adapted word embedding like so:
+\begin{equation*}
+	w_{i, DA} = \frac{1}{2} w_{i, DS} \; \boldsymbol\phi_{DS} + \frac{1}{2} w_{i, G}\; \boldsymbol\phi_{G} 
+\end{equation*}
+
+
+\end{document}
