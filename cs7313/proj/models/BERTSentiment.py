@@ -8,7 +8,7 @@ from transformers import BertModel
 class BERTSentimentClassifier(nn.Module):
 
     def __init__(self, freeze_bert = True):
-        super(BERTSentiment, self).__init__()
+        super().__init__()
         self.bert_layer = BertModel.from_pretrained('bert-base-uncased')
 
         if freeze_bert:

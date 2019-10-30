@@ -14,16 +14,16 @@ def train(model, dataset, freeze_base, max_len, batch_size, learning_rate, print
     return "implement me"
     
 def evaluate(model, dataset):
-    gpu = 0
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     if torch.cuda.is_available():
-        gpu = 1
+        net.cuda(gpu)
         
     start_time = time.time()
-    print("Evaluating " + model + " on the " + dataset + " dataset.")
+    print("Evaluating " + model + " on the " + dataset + " dataset using the " + str(device) + ".")
     dataloader = get_val_dataloader_for_dataset(dataset)
     criterion = nn.BCEWithLogitsLoss()
     net = BERTSentimentClassifier() # for now, we will automatically do BERT, later will generalize to any model
-    net.cuda(gpu)
     net.eval()
     
     mean_accuracy, mean_loss = 0, 0
@@ -31,14 +31,17 @@ def evaluate(model, dataset):
 
     with torch.no_grad():
         for seq, attention_masks, labels in dataloader:
-            seq, attention_masks, labels = seq.cuda(gpu), attention_masks.cuda(gpu), labels.cuda(gpu)
+            if torch.cuda.is_available():
+                seq, attention_masks, labels = seq.cuda(), attention_masks.cuda(), labels.cuda()
             logits = net(seq, attention_masks)
             mean_loss += criterion(logits.squeeze(-1), labels.float()).item()
             mean_accuracy += get_accuracy_from_logits(logits, labels)
             count += 1
     
-    print("Accuracy: " + (mean_accuracy / count))
-    print("Avg loss: " + (mean_loss / count))
+    print("Accuracy: ")
+    print(mean_accuracy / count)
+    print("Avg loss: ")
+    print(mean_loss / count)
     print("Done in {} seconds".format(time.time() - start_time))
 
 def get_accuracy_from_logits(logits, labels):

@@ -1,7 +1,7 @@
 import os
 
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 from transformers import BertTokenizer
 import pandas as pd
 
