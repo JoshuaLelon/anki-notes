@@ -8,7 +8,7 @@ from models.BERTSentiment import BERTSentimentClassifier
 from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset
 
 def train(model, dataset, gpu, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
-
+    return "implement me"
     
 def evaluate(model, dataset, gpu):
     start_time = time.time()
