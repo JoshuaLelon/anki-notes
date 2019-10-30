@@ -7,10 +7,17 @@ from torch.utils.data import DataLoader
 from models.BERTSentiment import BERTSentimentClassifier
 from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset
 
-def train(model, dataset, gpu, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
+def train(model, dataset, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
+    gpu = 0
+    if torch.cuda.is_available():
+        gpu = 1
     return "implement me"
     
-def evaluate(model, dataset, gpu):
+def evaluate(model, dataset):
+    gpu = 0
+    if torch.cuda.is_available():
+        gpu = 1
+        
     start_time = time.time()
     print("Evaluating " + model + " on the " + dataset + " dataset.")
     dataloader = get_val_dataloader_for_dataset(dataset)
