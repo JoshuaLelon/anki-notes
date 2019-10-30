@@ -4,7 +4,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from model import SentimentClassifier
+from models.BERTSentiment import BERTSentimentClassifier
+from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset
 
 def train(model, dataset, gpu, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
 
@@ -14,7 +15,7 @@ def evaluate(model, dataset, gpu):
     print("Evaluating " + model + " on the " + dataset + " dataset.")
     dataloader = get_val_dataloader_for_dataset(dataset)
     criterion = nn.BCEWithLogitsLoss()
-    net = BERTSentiment() # for now, we will automatically do BERT, later will generalize to any model
+    net = BERTSentimentClassifier() # for now, we will automatically do BERT, later will generalize to any model
     net.cuda(gpu)
     net.eval()
     
@@ -32,27 +33,6 @@ def evaluate(model, dataset, gpu):
     print("Accuracy: " + (mean_accuracy / count))
     print("Avg loss: " + (mean_loss / count))
     print("Done in {} seconds".format(time.time() - start_time))
-
-def get_train_val_dataloaders_for_dataset(dataset):
-    return get_train_dataloader_for_dataset(dataset), get_val_dataloader_for_dataset(dataset)
-
-def get_train_dataloader_for_dataset(dataset):
-    return get_dataloader_from_dataset(dataset, max_length, batch_size, num_workers, "train")
-
-def get_val_dataloader_for_dataset(dataset):
-    return get_dataloader_from_dataset(dataset, max_length, batch_size, num_workers, "val")
-
-def get_dataloader_from_dataset(dataset, max_length, batch_size, num_workers, train_or_val):
-    filename = DATASET_DIR + train_or_val + "_" + dataset + ".csv"
-    pytorch_dataset = get_pytorch_dataset(filename, dataset, max_length)
-    dataset_loader = DataLoader(pytorch_dataset, batch_size = batch_size, num_workers = num_workers)
-    return dataset_loader
-
-def get_pytorch_dataset(filename, dataset, max_length):
-    # here, in the future, we will use the dataset variable to retrieve the custom dataset class for the data
-    # for now, we will just use it for one case: twitter (to be built)
-    pytorch_dataset = TwitterDataset(filename = filename, maxlen = max_length)
-    return pytorch_dataset
 
 def get_accuracy_from_logits(logits, labels):
     probs = torch.sigmoid(logits.unsqueeze(-1))

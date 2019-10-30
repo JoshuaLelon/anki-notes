@@ -5,7 +5,7 @@ from transformers import BertModel
 # At this point, I'm using BERT as a blackbox model, so I'm adapting this class from here:
 # https://github.com/kabirahuja2431/FineTuneBERT/blob/master/src/model.py
 
-class BERTSentiment(nn.Module):
+class BERTSentimentClassifier(nn.Module):
 
     def __init__(self, freeze_bert = True):
         super(BERTSentiment, self).__init__()
