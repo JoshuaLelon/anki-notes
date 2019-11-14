@@ -68,7 +68,7 @@ def create_token_dict_helper(row, all_words):
     
 
 def create_token_dict(df, all_words):
-    t = Parallel(n_jobs=-1, prefer="threads")( delayed(create_token_dict_helper)(row, all_words)
+    t = Parallel(n_jobs=1, prefer="threads")( delayed(create_token_dict_helper)(row, all_words)
                                               for row in df.itertuples(index=True, name='Pandas')
                                              )
     return t
@@ -89,7 +89,8 @@ def train_nb(dataset):
     
     print("Tokenizing took {} seconds".format(time.time() - start_time))
     start_time = time.time()
-    t = create_token_dict(train_df.head(50), all_words)
+    print("Starting token dictionary creation of ", len(train_df), " entries.")
+    t = create_token_dict(train_df.head(5), all_words)
     print("Creating a token dictionary took {} seconds".format(time.time() - start_time))
     start_time = time.time()
     classifier = nltk.NaiveBayesClassifier.train(t)
