@@ -57,3 +57,9 @@ def get_pytorch_dataset(filename, dataset, max_length):
     # for now, we will just use it for one case: twitter (to be built)
     pytorch_dataset = BERT_Dataset(filename = filename, max_length = max_length)
     return pytorch_dataset
+
+def get_val_path_and_name(dataset):
+    return "", "val_" + dataset + ".csv"
+    
+def get_trn_path_and_name(dataset):
+    return "", "train_" + dataset + ".csv"

@@ -4,8 +4,11 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
+from fastai import *
+from fastai.text import *
+
 from models.BERTSentiment import BERTSentimentClassifier
-from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset
+from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset, get_val_path_and_name, get_trn_path_and_name
 
 def train_bert(dataset, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
     gpu = 0
@@ -51,9 +54,9 @@ def get_accuracy_from_logits(logits, labels):
     return acc
 
 def train_nb(dataset):
-    gpu = 0
-    if torch.cuda.is_available():
-        gpu = 1
-    return "implement me"
+    dataset_path, file_name = get_trn_path_and_name(dataset)
+    data = (TextList.from_csv(dataset_path, file_name, cols='text').split_from_df(col=2).label_from_df(cols=0))
+    print(data.valid.x[0], data.valid.y[0])
     
 def evaluate_nb(dataset):
+    return "hi"
