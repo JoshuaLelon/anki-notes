@@ -89,7 +89,7 @@ def train_nb(dataset):
     
     print("Tokenizing took {} seconds".format(time.time() - start_time))
     start_time = time.time()
-    t = create_token_dict(train_df.head(5), all_words)
+    t = create_token_dict(train_df.head(50), all_words)
     print("Creating a token dictionary took {} seconds".format(time.time() - start_time))
     start_time = time.time()
     classifier = nltk.NaiveBayesClassifier.train(t)
