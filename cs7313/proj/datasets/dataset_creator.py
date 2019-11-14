@@ -59,7 +59,7 @@ def get_pytorch_dataset(filename, dataset, max_length):
     return pytorch_dataset
 
 def get_val_path_and_name(dataset):
-    return "", "val_" + dataset + ".csv"
+    return os.getcwd() + "/datasets/", "val_" + dataset + ".csv"
     
 def get_trn_path_and_name(dataset):
-    return "", "train_" + dataset + ".csv"
+    return os.getcwd() + "/datasets/", "train_" + dataset + ".csv"

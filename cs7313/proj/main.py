@@ -3,9 +3,14 @@ import time
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 from fastai import *
 from fastai.text import *
+
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import word_tokenize
 
 from models.BERTSentiment import BERTSentimentClassifier
 from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset, get_val_path_and_name, get_trn_path_and_name
@@ -53,10 +58,56 @@ def get_accuracy_from_logits(logits, labels):
     acc = (soft_probs.squeeze() == labels).float().mean()
     return acc
 
-def train_nb(dataset):
-    dataset_path, file_name = get_trn_path_and_name(dataset)
-    data = (TextList.from_csv(dataset_path, file_name, cols='text').split_from_df(col=2).label_from_df(cols=0))
-    print(data.valid.x[0], data.valid.y[0])
+def create_token_dict(df, all_words):
+    t = [
+            ( 
+                {
+                    word: (word in word_tokenize(getattr(row, "text"))) for word in all_words
+                }, getattr(row, "label")
+            ) 
+            for row in df.itertuples(index=True, name='Pandas')
+        ]
+    return t
     
-def evaluate_nb(dataset):
-    return "hi"
+
+def train_nb(dataset):
+    print("Training a Naive Bayes classifier on ", dataset)
+    start_time = time.time()
+    dataset_path, file_name = get_trn_path_and_name(dataset)
+    train_df = pd.read_csv(dataset_path + file_name)
+   
+    dataset_path, file_name = get_val_path_and_name(dataset)
+    val_df = pd.read_csv(dataset_path + file_name)
+    
+    df = pd.concat([train_df, val_df])
+    
+    list_of_docs = list(df['text'])
+    all_words = set(word.lower() for doc in list_of_docs for word in word_tokenize(doc))
+    
+    print("Tokenizing took {} seconds".format(time.time() - start_time))
+    start_time = time.time()
+    t = create_token_dict(train_df, all_words)
+    print("Creating a token dictionary took {} seconds".format(time.time() - start_time))
+    start_time = time.time()
+    classifier = nltk.NaiveBayesClassifier.train(t)
+    print("Training took {} seconds".format(time.time() - start_time))
+    return classifier, all_words
+    
+def evaluate_nb(dataset, classifier, all_words):
+    print("Evaluating a Naive Bayes classifier on ", dataset)
+    start_time = time.time()
+    dataset_path, file_name = get_val_path_and_name(dataset)
+    df = pd.read_csv(dataset_path + file_name)
+    
+    val_set = list(df['text'])
+    tokenized_val_set = [{ word: (word in word_tokenize(test_sample.lower())) for word in all_words } for test_sample in val_set]
+    print("Tokenizing took {} seconds".format(time.time() - start_time))
+    start_time = time.time()
+    results = [ classifier.classify(test_sample) for test_sample in tokenized_val_set ]
+    
+    print("Classification took {} seconds".format(time.time() - start_time))
+    ground_truth = list(df['label'])
+    
+    differences = [results[i] - ground_truth[i] for i in range(len(results))]
+    accuracy = differences.count(0) / len(results)
+    print("Accuracy: ", accuracy)
