@@ -16,6 +16,8 @@ from nltk.tokenize import word_tokenize
 from models.BERTSentiment import BERTSentimentClassifier
 from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset, get_val_path_and_name, get_trn_path_and_name
 
+number_of_samples = 50
+
 def train_bert(dataset, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
     gpu = 0
     if torch.cuda.is_available():
@@ -87,18 +89,12 @@ def train_nb(dataset):
     print("Tokenizing took {} seconds".format(time.time() - start_time))
     start_time = time.time()
     print("Starting token dictionary creation of ", len(train_df), " entries.")
-    t = create_token_dict(train_df.head(5), all_words)
+    t = create_token_dict(train_df.head(number_of_samples), all_words)
     print("Creating a token dictionary took {} seconds".format(time.time() - start_time))
     start_time = time.time()
     classifier = nltk.NaiveBayesClassifier.train(t)
     print("Training took {} seconds".format(time.time() - start_time))
     return classifier, all_words
-
-def evaluate_nb_helper(test_sample, all_words):
-    
-    return { 
-            word: (word in word_tokenize(test_sample.lower())) for word in all_words 
-    }
     
 def evaluate_nb(dataset, classifier, all_words):
     print("Evaluating a Naive Bayes classifier on ", dataset)
@@ -106,7 +102,7 @@ def evaluate_nb(dataset, classifier, all_words):
     dataset_path, file_name = get_val_path_and_name(dataset)
     df = pd.read_csv(dataset_path + file_name)
     
-    val_set = list(df['text'])
+    val_set = list(df['text'])[0:number_of_samples]
     tokenized_val_set = [{ word: (word in word_tokenize(test_sample.lower())) for word in all_words } for test_sample in val_set]
     print("Tokenizing took {} seconds".format(time.time() - start_time))
     start_time = time.time()
