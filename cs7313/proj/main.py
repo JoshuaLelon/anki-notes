@@ -16,7 +16,7 @@ from nltk.tokenize import word_tokenize
 from models.BERTSentiment import BERTSentimentClassifier
 from datasets.dataset_creator import get_val_dataloader_for_dataset, get_train_dataloader_for_dataset, get_val_path_and_name, get_trn_path_and_name
 
-number_of_samples = 50
+number_of_samples = 100
 
 def train_bert(dataset, freeze_base, max_len, batch_size, learning_rate, print_per_n_lines, max_epochs):
     gpu = 0
