@@ -59,18 +59,15 @@ def get_accuracy_from_logits(logits, labels):
     acc = (soft_probs.squeeze() == labels).float().mean()
     return acc
 
-def create_token_dict_helper(row, all_words):
-    return ( 
+def create_token_dict(df, all_words):
+    t = [
+            ( 
                 {
                     word: (word in word_tokenize(getattr(row, "text"))) for word in all_words
                 }, getattr(row, "label")
             ) 
-    
-
-def create_token_dict(df, all_words):
-    t = Parallel(n_jobs=1, prefer="threads")( delayed(create_token_dict_helper)(row, all_words)
-                                              for row in df.itertuples(index=True, name='Pandas')
-                                             )
+            for row in df.itertuples(index=True, name='Pandas')
+        ]
     return t
 
 def train_nb(dataset):
@@ -110,9 +107,7 @@ def evaluate_nb(dataset, classifier, all_words):
     df = pd.read_csv(dataset_path + file_name)
     
     val_set = list(df['text'])
-    tokenized_val_set = Parallel(n_jobs=-1, prefer="threads")( delayed(evaluate_nb_helper)(test_sample, all_words)
-                                              for test_sample in val_set
-                                             )
+    tokenized_val_set = [{ word: (word in word_tokenize(test_sample.lower())) for word in all_words } for test_sample in val_set]
     print("Tokenizing took {} seconds".format(time.time() - start_time))
     start_time = time.time()
     results = [ classifier.classify(test_sample) for test_sample in tokenized_val_set ]
